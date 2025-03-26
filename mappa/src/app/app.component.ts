@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   Map,
   MapOptions,
@@ -6,14 +6,16 @@ import {
   latLng,
 
 } from 'leaflet';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'mappa';
+
 
   mouseX: number = 0;
   mouseY: number = 0;
@@ -41,6 +43,19 @@ export class AppComponent {
       var lat = coord.lat;
       var lng = coord.lng;
     });
+  }
+
+  ngOnInit(): void {
+    this.ConfigMap()
+  }
+
+  mappa: any;
+
+  ConfigMap(){
+  this.mappa = L.map('map',{
+    center:[45.464211, 9.191383],
+    zoom:6
+  });
   }
 
 }
