@@ -1,13 +1,2 @@
-<div
-  class="map-container"
-  leaflet
-  [leafletOptions]="options"
-  (leafletMapReady)="onMapReady($event)"
-  (leafletMapZoomEnd)="onMapZoomEnd($event)"
-></div>
-<mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="favoritar()">Favoritar</button>
-  <button mat-menu-item (click)="desfavoritar()">Desfavoritar</button>
-  <button mat-menu-item (click)="remove()">Remover</button>
-</mat-menu>
-<div id="circle" [matMenuTriggerFor]="menu"></div>
+<div class="map-container" leaflet [leafletOptions]="options">
+</div>
