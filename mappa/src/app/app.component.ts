@@ -1,61 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  Map,
-  MapOptions,
-  tileLayer,
-  latLng,
-
-} from 'leaflet';
-import * as L from 'leaflet';
+import { Component, OnInit } from "@angular/core";
+import * as L from "leaflet";
+import { Icon, icon } from "leaflet";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"]
 })
 export class AppComponent implements OnInit {
-  title = 'mappa';
+  title = "mappa";
 
-
-  mouseX: number = 0;
-  mouseY: number = 0;
-  options: MapOptions = {
+  options: L.MapOptions = {
+    zoom: 6,
+    center: L.latLng(45.464211, 9.191383),
     layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        opacity: 0.7,
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
-        detectRetina: true,
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }),
-    ],
-    zoom: 19,
-    center: latLng(45.464211, 9.191383),
-    
+        attribution: "&copy; OpenStreetMap contributors"
+      })
+    ]
   };
-  public map: Map | undefined;
-  public zoom: number | undefined; 
 
-  onMapReady(map: Map) {
-    this.map = map;
-    this.map.on('click', (e) => {
-      var coord = e.latlng;
-      var lat = coord.lat;
-      var lng = coord.lng;
+  map: L.Map | undefined;
+  markersLayer = new L.LayerGroup();
+
+  private defaultIcon: Icon = icon({
+    iconUrl: "https://decisionfarm.ca/assets/images/marker-icon-2x.png",
+    iconSize: [20, 30], // Dimensioni dell'icona
+    iconAnchor: [20, 51] // Punto di ancoraggio
+  });
+
+  stations = [
+    { id: "1", name: "Milano", lat: 45.464211, lng: 9.191383 },
+    { id: "2", name: "Roma", lat: 41.902782, lng: 12.496366 },
+    { id: "3", name: "Napoli", lat: 40.851775, lng: 14.268124 }
+  ];
+
+  createStations() {
+    this.stations.forEach((s) => {
+      const marker = L.marker([s.lat, s.lng], { icon: this.defaultIcon })
+        .bindPopup(`<b>${s.name}</b>`) // Mostra il nome quando si clicca sul marker
+        .addTo(this.markersLayer);
     });
   }
 
-  ngOnInit(): void {
-    this.ConfigMap()
+  onMapReady(map: L.Map) {
+    this.map = map;
+    map.addLayer(this.markersLayer);
+    this.createStations();
   }
 
-  mappa: any;
-
-  ConfigMap(){
-  this.mappa = L.map('map',{
-    center:[45.464211, 9.191383],
-    zoom:6
-  });
-  }
-
+  ngOnInit(): void {}
 }
+
