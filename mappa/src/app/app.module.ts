@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { AppComponent } from './app.component';
+import { TimelineComponent } from './timeline/timeline.component';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import { AppComponent } from './app.component';
 
     LeafletModule,
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, TimelineComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
