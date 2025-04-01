@@ -87,7 +87,8 @@
   
 
   .map-container {
-    height: 600px;
+    height: 610px;
+    width: 600px;
   }
   div#circle{
     position:absolute;

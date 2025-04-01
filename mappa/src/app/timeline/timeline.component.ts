@@ -23,10 +23,18 @@ interface EventYear {
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent {
+
+  mostraCard: boolean = true;
+
+  toggleCard(): void {
+    this.mostraCard = !this.mostraCard;
+  }
+
+
   private initialView = {
     lat: 42.5,
     lng: 12.5,
-    zoom: 6
+    zoom: 5.5
   };
 
   options: L.MapOptions = {
@@ -177,7 +185,7 @@ export class TimelineComponent {
     }
   ];
 
-  
+
   onMapReady(map: L.Map) {
     this.map = map;
     map.addLayer(this.markersLayer);
@@ -193,7 +201,7 @@ export class TimelineComponent {
 
     event.eventi_anno.forEach(ev => {
       const marker = L.marker([ev.location.lat, ev.location.lng], { icon: this.highlightIcon })
-        .bindPopup(`<b>${ev.title}</b><br>${ev.location.name}`)
+        .bindPopup(`<b>${ev.title}</b><br>${ev.location.name}</b><br><button (click)="toggleCard()">Mostra Dettaglio</button`)
         .openPopup();
       this.markersLayer.addLayer(marker);
     });

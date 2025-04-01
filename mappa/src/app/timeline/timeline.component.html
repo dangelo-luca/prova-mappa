@@ -7,9 +7,20 @@
       {{ event.year }}
     </div>
   </div>
+</div>
+<div>
   <div class="map-container" 
        leaflet 
        [leafletOptions]="options" 
        (leafletMapReady)="onMapReady($event)">
   </div>
+
+
+
+<div *ngIf="mostraCard" class="card">
+  <div class="card-body">
+    <h5 class="card-title">Titolo della Card</h5>
+    <p class="card-text">Contenuto della card con i dettagli desiderati.</p>
+  </div>
 </div>
+
