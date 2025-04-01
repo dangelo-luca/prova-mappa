@@ -1,33 +1,11 @@
 <div class="timeline-container">
-    <h1>Linea Temporale - Anni di Piombo</h1>
-    
-    <div class="timeline">
-      <div 
-        *ngFor="let event of events" 
-        class="year" 
-        (click)="selectEvent(event)" 
-        (mouseover)="onMouseOver(event)" 
-        (mouseout)="onMouseOut()"
-        [id]="'year-' + event.year"
-      >
-        {{ event.year }}
+      <h1>Linea Temporale - Anni di Piombo</h1>
+      <div class="timeline">
+        <div *ngFor="let event of events" 
+             class="year" 
+             (click)="selectEvent(event)">
+          {{ event.year }}
+        </div>
       </div>
+      <div class="map-container" leaflet [leafletOptions]="options" (leafletMapReady)="onMapReady($event)"></div>
     </div>
-  
-    <!-- Anteprima dettagli centrata -->
-    <div *ngIf="preview" class="event-preview">
-      <p><strong>{{ preview.year }}</strong>: {{ preview.previewText }}</p>
-    </div>
-  
-</div>
-  
-  <div *ngIf="selectedEvent" class="event-details-box">
-    <button class="close-btn" (click)="closeDetails()">×</button>
-    <h2>{{ selectedEvent.year }}</h2>
-
-    <div *ngFor="let ev of selectedEvent.eventi_anno" class="event-details">
-      <h3>{{ ev.title }}</h3>
-      <p>{{ ev.details }}</p>
-      <p><strong>Luogo:</strong> {{ ev.location.name }}</p> <!-- Aggiungi il luogo -->
-    </div>
-  </div>

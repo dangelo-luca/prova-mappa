@@ -1,7 +1,6 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import * as L from 'leaflet';
-import { Icon, icon } from "leaflet";
-
+import { Icon, icon } from 'leaflet';
 
 interface Evento {
   title: string;
@@ -24,29 +23,33 @@ interface EventYear {
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent {
-  
   options: L.MapOptions = {
     zoom: 6,
     center: L.latLng(45.464211, 9.191383),
     layers: [
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: "&copy; OpenStreetMap contributors"
+        attribution: '&copy; OpenStreetMap contributors'
       })
     ]
   };
 
   map: L.Map | undefined;
   markersLayer = new L.LayerGroup();
+  selectedMarker: L.Marker | null = null;
 
   private defaultIcon: Icon = icon({
-    iconUrl: "https://decisionfarm.ca/assets/images/marker-icon-2x.png",
-    iconSize: [20, 30], // Dimensioni dell'icona
-    iconAnchor: [20, 51] // Punto di ancoraggio
+    iconUrl: 'https://decisionfarm.ca/assets/images/marker-icon-2x.png',
+    iconSize: [20, 30],
+    iconAnchor: [10, 30]
   });
 
-  
-  
+  private highlightIcon: Icon = icon({
+    iconUrl: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
+    iconSize: [30, 40],
+    iconAnchor: [15, 40]
+  });
+
   events: EventYear[] = [
     {
       year: 1969,
@@ -175,50 +178,25 @@ export class TimelineComponent {
     }
   ];
 
-  selectedEvent: EventYear | null = null;
-  preview: any = null;
-  marker: L.Marker | null = null;
+  onMapReady(map: L.Map) {
+    this.map = map;
+    map.addLayer(this.markersLayer);
+  }
 
-  
-    
-  
   selectEvent(event: EventYear) {
-    this.selectedEvent = event;
-    this.preview = null; 
+    if (!this.map) return;
+    
+    const eventLocation = event.eventi_anno[0].location;
+    this.map.setView([eventLocation.lat, eventLocation.lng], 10, { animate: true });
 
-    if (this.map && event.eventi_anno.length > 0) {
-      const { lat, lng, name } = event.eventi_anno[0].location;
-
-      // Rimuove il vecchio marker se presente
-      if (this.marker) {
-        this.map.removeLayer(this.marker);
-      }
-
-      // Aggiunge il nuovo marker
-      this.marker = L.marker([lat, lng]).addTo(this.map)
-        .bindPopup(`<b>${event.eventi_anno[0].title}</b><br>${name}`)
-        .openPopup();
-
-      // Centra la mappa sulla posizione
-      this.map.setView([lat, lng], 10);
+    if (this.selectedMarker) {
+      this.markersLayer.removeLayer(this.selectedMarker);
     }
-  }
 
-  closeDetails() {
-    this.selectedEvent = null;
-  }
-
-  onMouseOver(event: EventYear) {
-    const firstEvent = event.eventi_anno[0];
-    const previewText = firstEvent.details.length > 50 ? firstEvent.details.substring(0, 50) + '...' : firstEvent.details;
-
-    this.preview = {
-      year: event.year,
-      previewText: previewText
-    };
-  }
-
-  onMouseOut() {
-    this.preview = null;
+    this.selectedMarker = L.marker([eventLocation.lat, eventLocation.lng], { icon: this.highlightIcon })
+      .bindPopup(`<b>${event.eventi_anno[0].title}</b><br>${eventLocation.name}`)
+      .openPopup();
+    
+    this.markersLayer.addLayer(this.selectedMarker);
   }
 }
