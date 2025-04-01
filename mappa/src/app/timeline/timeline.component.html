@@ -1,11 +1,15 @@
 <div class="timeline-container">
-      <h1>Linea Temporale - Anni di Piombo</h1>
-      <div class="timeline">
-        <div *ngFor="let event of events" 
-             class="year" 
-             (click)="selectEvent(event)">
-          {{ event.year }}
-        </div>
-      </div>
-      <div class="map-container" leaflet [leafletOptions]="options" (leafletMapReady)="onMapReady($event)"></div>
+  <h1>Linea Temporale - Anni di Piombo</h1>
+  <div class="timeline">
+    <div *ngFor="let event of events" 
+         class="year" 
+         (click)="selectEvent(event)">
+      {{ event.year }}
     </div>
+  </div>
+  <div class="map-container" 
+       leaflet 
+       [leafletOptions]="options" 
+       (leafletMapReady)="onMapReady($event)">
+  </div>
+</div>

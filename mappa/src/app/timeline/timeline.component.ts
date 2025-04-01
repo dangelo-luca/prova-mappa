@@ -25,7 +25,7 @@ interface EventYear {
 export class TimelineComponent {
   options: L.MapOptions = {
     zoom: 6,
-    center: L.latLng(45.464211, 9.191383),
+    center: L.latLng(42.5, 12.5), // Italia centrata
     layers: [
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -36,13 +36,6 @@ export class TimelineComponent {
 
   map: L.Map | undefined;
   markersLayer = new L.LayerGroup();
-  selectedMarker: L.Marker | null = null;
-
-  private defaultIcon: Icon = icon({
-    iconUrl: 'https://decisionfarm.ca/assets/images/marker-icon-2x.png',
-    iconSize: [20, 30],
-    iconAnchor: [10, 30]
-  });
 
   private highlightIcon: Icon = icon({
     iconUrl: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
@@ -54,8 +47,8 @@ export class TimelineComponent {
     {
       year: 1969,
       eventi_anno: [
-        { 
-          title: 'Strage di Piazza Fontana', 
+        {
+          title: 'Strage di Piazza Fontana',
           details: '12 dicembre: Bomba nella Banca Nazionale dell\'Agricoltura a Milano. 17 morti.',
           location: { name: 'Milano, Piazza Fontana', lat: 45.4642, lng: 9.1898 }
         }
@@ -185,18 +178,14 @@ export class TimelineComponent {
 
   selectEvent(event: EventYear) {
     if (!this.map) return;
-    
-    const eventLocation = event.eventi_anno[0].location;
-    this.map.setView([eventLocation.lat, eventLocation.lng], 10, { animate: true });
 
-    if (this.selectedMarker) {
-      this.markersLayer.removeLayer(this.selectedMarker);
-    }
+    this.markersLayer.clearLayers();
 
-    this.selectedMarker = L.marker([eventLocation.lat, eventLocation.lng], { icon: this.highlightIcon })
-      .bindPopup(`<b>${event.eventi_anno[0].title}</b><br>${eventLocation.name}`)
-      .openPopup();
-    
-    this.markersLayer.addLayer(this.selectedMarker);
+    event.eventi_anno.forEach(ev => {
+      const marker = L.marker([ev.location.lat, ev.location.lng], { icon: this.highlightIcon })
+        .bindPopup(`<b>${ev.title}</b><br>${ev.location.name}`)
+        .openPopup();
+      this.markersLayer.addLayer(marker);
+    });
   }
 }
