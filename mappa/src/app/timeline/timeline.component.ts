@@ -23,9 +23,15 @@ interface EventYear {
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent {
+  private initialView = {
+    lat: 42.5,
+    lng: 12.5,
+    zoom: 6
+  };
+
   options: L.MapOptions = {
-    zoom: 6,
-    center: L.latLng(42.5, 12.5), // Italia centrata
+    zoom: this.initialView.zoom,
+    center: L.latLng(this.initialView.lat, this.initialView.lng),
     layers: [
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -47,8 +53,8 @@ export class TimelineComponent {
     {
       year: 1969,
       eventi_anno: [
-        {
-          title: 'Strage di Piazza Fontana',
+        { 
+          title: 'Strage di Piazza Fontana', 
           details: '12 dicembre: Bomba nella Banca Nazionale dell\'Agricoltura a Milano. 17 morti.',
           location: { name: 'Milano, Piazza Fontana', lat: 45.4642, lng: 9.1898 }
         }
@@ -171,6 +177,7 @@ export class TimelineComponent {
     }
   ];
 
+  
   onMapReady(map: L.Map) {
     this.map = map;
     map.addLayer(this.markersLayer);
@@ -178,6 +185,9 @@ export class TimelineComponent {
 
   selectEvent(event: EventYear) {
     if (!this.map) return;
+
+    // Reset posizione e zoom della mappa
+    this.map.setView([this.initialView.lat, this.initialView.lng], this.initialView.zoom);
 
     this.markersLayer.clearLayers();
 
