@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import * as L from 'leaflet';
+import {LeafletEvent} from 'leaflet'
 import { Icon, icon } from 'leaflet';
 
 interface Evento {
@@ -24,7 +25,8 @@ interface EventYear {
 })
 export class TimelineComponent {
 
-  mostraCard: boolean = true;
+  mostraCard: boolean = false;
+  eventoSelezionato: Evento | null = null;
 
   toggleCard(): void {
     this.mostraCard = !this.mostraCard;
@@ -193,17 +195,24 @@ export class TimelineComponent {
 
   selectEvent(event: EventYear) {
     if (!this.map) return;
-
-    // Reset posizione e zoom della mappa
+  
     this.map.setView([this.initialView.lat, this.initialView.lng], this.initialView.zoom);
-
     this.markersLayer.clearLayers();
-
+  
     event.eventi_anno.forEach(ev => {
       const marker = L.marker([ev.location.lat, ev.location.lng], { icon: this.highlightIcon })
-        .bindPopup(`<b>${ev.title}</b><br>${ev.location.name}</b><br><button (click)="toggleCard()">Mostra Dettaglio</button`)
-        .openPopup();
+        .bindPopup(`<b>${ev.title}</b><br>${ev.location.name}`)
+        .on('click', () => this.onclick(ev));  // Passiamo direttamente l'evento 'ev'
+      
       this.markersLayer.addLayer(marker);
     });
   }
+  
+
+  // Quando si clicca su un marker, mostra la card con i dettagli
+  onclick(ev: Evento) {
+    this.eventoSelezionato = ev;  // Aggiorniamo la variabile eventoSelezionato
+    this.mostraCard = true;       // Mostriamo la card
+  }
+  
 }

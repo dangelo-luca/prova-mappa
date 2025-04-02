@@ -12,15 +12,13 @@
   <div class="map-container" 
        leaflet 
        [leafletOptions]="options" 
-       (leafletMapReady)="onMapReady($event)">
+       (leafletMapReady)="onMapReady($event)" style="margin-left: auto; margin-right: auto;">
   </div>
 
-
-
-<div *ngIf="mostraCard" class="card">
-  <div class="card-body">
-    <h5 class="card-title">Titolo della Card</h5>
-    <p class="card-text">Contenuto della card con i dettagli desiderati.</p>
+  <div *ngIf="mostraCard" class="card">
+    <h2>{{ eventoSelezionato?.title }}</h2>
+    <p>{{ eventoSelezionato?.details }}</p>
+    <button (click)="mostraCard = false">Chiudi</button>
   </div>
-</div>
+
 
