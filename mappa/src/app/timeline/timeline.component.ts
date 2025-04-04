@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import * as L from 'leaflet';
 import {LeafletEvent} from 'leaflet'
 import { Icon, icon } from 'leaflet';
@@ -27,6 +27,8 @@ export class TimelineComponent {
 
   mostraCard: boolean = false;
   eventoSelezionato: Evento | null = null;
+
+  constructor(private cd:ChangeDetectorRef){}
 
   toggleCard(): void {
     this.mostraCard = !this.mostraCard;
@@ -213,6 +215,7 @@ export class TimelineComponent {
   onclick(ev: Evento) {
     this.eventoSelezionato = ev;  // Aggiorniamo la variabile eventoSelezionato
     this.mostraCard = true;       // Mostriamo la card
+    this.cd.detectChanges()
   }
   
 }
