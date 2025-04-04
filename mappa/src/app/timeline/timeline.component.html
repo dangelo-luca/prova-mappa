@@ -18,7 +18,7 @@
   <div *ngIf="mostraCard" class="card">
     <h2>{{ eventoSelezionato?.title }}</h2>
     <p>{{ eventoSelezionato?.details }}</p>
-    <button (click)="mostraCard = false">Chiudi</button>
+    <button (click)='chiudiCard()'>Chiudi</button>
   </div>
 
 

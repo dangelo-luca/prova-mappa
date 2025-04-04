@@ -215,7 +215,20 @@ export class TimelineComponent {
   onclick(ev: Evento) {
     this.eventoSelezionato = ev;  // Aggiorniamo la variabile eventoSelezionato
     this.mostraCard = true;       // Mostriamo la card
-    this.cd.detectChanges()
+
+    setTimeout(() => {
+      this.cd.detectChanges();
+    });
+   
   }
+
+  chiudiCard() {
+    this.mostraCard = false;
+    this.eventoSelezionato = null;
+    setTimeout(() => {
+      this.cd.detectChanges();
+    });
+  }
+  
   
 }
