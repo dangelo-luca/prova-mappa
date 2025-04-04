@@ -9,16 +9,20 @@
   </div>
 </div>
 <div>
-  <div class="map-container" 
-       leaflet 
-       [leafletOptions]="options" 
-       (leafletMapReady)="onMapReady($event)" style="margin-left: auto; margin-right: auto;">
+  <div class="mappa-e-card">
+    <div class="map-container" 
+         leaflet 
+         [leafletOptions]="options" 
+         (leafletMapReady)="onMapReady($event)">
+    </div>
+  
+    <div *ngIf="mostraCard" class="card">
+      <h2>{{ eventoSelezionato?.title }}</h2>
+      <p>{{ eventoSelezionato?.details }}</p>
+      <button class="btn btn-primary" (click)='chiudiCard()'>Chiudi</button>
+    </div>
   </div>
-
-  <div *ngIf="mostraCard" class="card">
-    <h2>{{ eventoSelezionato?.title }}</h2>
-    <p>{{ eventoSelezionato?.details }}</p>
-    <button (click)='chiudiCard()'>Chiudi</button>
-  </div>
+  
+  
 
 

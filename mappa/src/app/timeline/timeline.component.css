@@ -98,3 +98,26 @@
     border-radius:50%;
     border:2px solid rgba(255, 255, 255, 0) ;
   }
+
+
+  .mappa-e-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .map-container {
+    width: 610px;
+    height: 600px;
+    flex-shrink: 0; /* non farla ridurre */
+    border: 1px solid #ccc;
+  }
+  
+  .card {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
