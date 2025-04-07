@@ -36,9 +36,9 @@ export class TimelineComponent {
 
 
   private initialView = {
-    lat: 42.5,
-    lng: 12.5,
-    zoom: 5.5
+    lat: 45.4642,
+    lng: 9.19,
+    zoom: 11
   };
 
   options: L.MapOptions = {
