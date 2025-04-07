@@ -76,9 +76,9 @@ export class TimelineComponent {
       year: 1970,
       eventi_anno: [
         { 
-          title: 'Golpe Borghese', 
-          details: '7-8 dicembre: Tentativo di colpo di Stato fallito.',
-          location: { name: 'Roma', lat: 41.9028, lng: 12.4964 }
+          title: 'Attentato alla banca dell\'Agricoltura', 
+          details: '8 febbraio: Attentato neofascista a Milano, esplosione in una filiale della Banca dell\'Agricoltura.',
+          location: { name: 'Milano, Via Manzoni', lat: 45.4669, lng: 9.1903 }
         }
       ]
     },
@@ -86,9 +86,9 @@ export class TimelineComponent {
       year: 1972,
       eventi_anno: [
         { 
-          title: 'Strage di Peteano', 
-          details: '31 maggio: Autobomba a Peteano (Gorizia), 3 carabinieri uccisi.',
-          location: { name: 'Peteano, Gorizia', lat: 45.9021, lng: 13.3833 }
+          title: 'Attentato al Commissariato di Porta Romana', 
+          details: '17 luglio: Attentato da parte di un gruppo di estremisti di sinistra, 2 poliziotti feriti.',
+          location: { name: 'Milano, Porta Romana', lat: 45.4456, lng: 9.1948 }
         }
       ]
     },
@@ -99,6 +99,11 @@ export class TimelineComponent {
           title: 'Strage della Questura di Milano', 
           details: '17 maggio: Attentato anarchico di Gianfranco Bertoli, 4 morti.',
           location: { name: 'Milano, Questura', lat: 45.4700, lng: 9.1905 }
+        },
+        { 
+          title: 'Attentato alla sede del Corriere della Sera', 
+          details: '28 gennaio: Esplosione dinamitarda contro la sede del quotidiano, nessun morto ma danni ingenti.',
+          location: { name: 'Milano, Corriere della Sera', lat: 45.4653, lng: 9.1911 }
         }
       ]
     },
@@ -106,14 +111,9 @@ export class TimelineComponent {
       year: 1974,
       eventi_anno: [
         { 
-          title: 'Strage di Piazza della Loggia', 
-          details: '28 maggio: Attentato neofascista a Brescia, 8 morti.',
-          location: { name: 'Brescia, Piazza della Loggia', lat: 45.5419, lng: 10.2111 }
-        },
-        { 
-          title: 'Strage dell\'Italicus', 
-          details: '4 agosto: Attentato sul treno Roma-Brennero, 12 morti.',
-          location: { name: 'San Benedetto Val di Sambro, Bologna', lat: 44.2391, lng: 11.3572 }
+          title: 'Attentato alla Camera del Lavoro', 
+          details: '25 marzo: Esplosione di una bomba, 2 feriti gravi.',
+          location: { name: 'Milano, Camera del Lavoro', lat: 45.4677, lng: 9.1917 }
         }
       ]
     },
@@ -121,9 +121,9 @@ export class TimelineComponent {
       year: 1977,
       eventi_anno: [
         { 
-          title: 'Omicidio di Francesco Lorusso', 
-          details: '11 marzo: Studente ucciso a Bologna durante scontri tra studenti e polizia.',
-          location: { name: 'Bologna', lat: 44.4949, lng: 11.3426 }
+          title: 'Scontri tra studenti e polizia', 
+          details: '28 aprile: Scontri tra studenti di sinistra e polizia, un giovane ucciso durante le manifestazioni.',
+          location: { name: 'Milano, Piazza San Babila', lat: 45.4750, lng: 9.1902 }
         }
       ]
     },
@@ -131,9 +131,9 @@ export class TimelineComponent {
       year: 1978,
       eventi_anno: [
         { 
-          title: 'Rapimento e morte di Aldo Moro', 
-          details: '16 marzo: Rapimento da parte delle Brigate Rosse. 9 maggio: Ritrovato morto in via Caetani.',
-          location: { name: 'Roma, Via Caetani', lat: 41.8922, lng: 12.4865 }
+          title: 'Tentativo di sequestro di un giudice', 
+          details: '11 ottobre: Tentativo di rapimento del giudice Franco Cordero da parte di un gruppo di terroristi.',
+          location: { name: 'Milano, Corso Venezia', lat: 45.4751, lng: 9.1915 }
         }
       ]
     },
@@ -141,9 +141,9 @@ export class TimelineComponent {
       year: 1980,
       eventi_anno: [
         { 
-          title: 'Strage della Stazione di Bologna', 
-          details: '2 agosto: Bomba alla stazione di Bologna, 85 morti.',
-          location: { name: 'Bologna, Stazione Centrale', lat: 44.5051, lng: 11.3417 }
+          title: 'Esplosione al quartiere Stazione Centrale', 
+          details: '15 maggio: Esplosione che colpisce il quartiere della Stazione Centrale, 3 feriti.',
+          location: { name: 'Milano, Stazione Centrale', lat: 45.4861, lng: 9.2046 }
         }
       ]
     },
@@ -151,9 +151,9 @@ export class TimelineComponent {
       year: 1981,
       eventi_anno: [
         { 
-          title: 'Scoperta della lista P2', 
-          details: '17 marzo: Scoperta della loggia massonica P2, coinvolta in trame eversive.',
-          location: { name: 'Roma', lat: 41.9028, lng: 12.4964 }
+          title: 'Attentato a Roberto Fiore', 
+          details: '23 aprile: Attentato a Roberto Fiore, leader di un movimento neofascista milanese, rimane gravemente ferito.',
+          location: { name: 'Milano, Via Della Moscova', lat: 45.4774, lng: 9.1872 }
         }
       ]
     },
@@ -161,9 +161,9 @@ export class TimelineComponent {
       year: 1982,
       eventi_anno: [
         { 
-          title: 'Omicidio del generale Dalla Chiesa', 
-          details: '3 settembre: Carlo Alberto Dalla Chiesa ucciso a Palermo dalla mafia.',
-          location: { name: 'Palermo', lat: 38.1157, lng: 13.3615 }
+          title: 'Attentato alla sede del Partito Comunista', 
+          details: '2 giugno: Esplosione contro la sede del Partito Comunista Italiano, pochi danni e nessun ferito.',
+          location: { name: 'Milano, Via Torino', lat: 45.4603, lng: 9.1889 }
         }
       ]
     },
@@ -171,9 +171,9 @@ export class TimelineComponent {
       year: 1984,
       eventi_anno: [
         { 
-          title: 'Strage del Rapido 904', 
-          details: '23 dicembre: Bomba sul treno Napoli-Milano, 16 morti.',
-          location: { name: 'San Benedetto Val di Sambro, Bologna', lat: 44.2391, lng: 11.3572 }
+          title: 'Attentato alla sede di Lotta Continua', 
+          details: '14 ottobre: Bombardamento della sede di Lotta Continua a Milano, nessun morto.',
+          location: { name: 'Milano, Via Brera', lat: 45.4716, lng: 9.1893 }
         }
       ]
     },
@@ -181,9 +181,9 @@ export class TimelineComponent {
       year: 1988,
       eventi_anno: [
         { 
-          title: 'Omicidio di Roberto Ruffilli', 
-          details: '16 aprile: Professore ucciso dalle Brigate Rosse a Forlì.',
-          location: { name: 'Forlì', lat: 44.2236, lng: 12.0406 }
+          title: 'Esplosione contro la sede della CGIL', 
+          details: '7 novembre: Attentato contro la sede della CGIL, danni ma nessun morto.',
+          location: { name: 'Milano, Via Tiziano', lat: 45.4675, lng: 9.1881 }
         }
       ]
     }
