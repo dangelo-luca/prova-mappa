@@ -1,7 +1,6 @@
 <div class="timeline-container">
   <h1>Linea Temporale - Anni di Piombo</h1>
   <div class="timeline">
-    <!-- Mostra ogni evento come un "anno" che può essere cliccato -->
     <div *ngFor="let event of events" 
          class="year" 
          (click)="selectEvent(event)">
@@ -11,17 +10,9 @@
 </div>
 
 <div class="mappa-e-card">
-  <!-- Contenitore per la mappa -->
   <div class="map-container" 
        leaflet 
        [leafletOptions]="options" 
        (leafletMapReady)="onMapReady($event)">
-  </div>
-
-  <!-- Card che mostra i dettagli dell'evento selezionato -->
-  <div *ngIf="mostraCard" class="card">
-    <h2>{{ eventoSelezionato?.title }}</h2>
-    <p>{{ eventoSelezionato?.details }}</p>
-    <button class="btn btn-primary" (click)="chiudiCard()">Chiudi</button>
   </div>
 </div>
