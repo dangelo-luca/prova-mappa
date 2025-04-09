@@ -46,7 +46,7 @@ export class TimelineComponent implements OnInit {
   // Recupera gli eventi dal backend
   async fetchEvents(): Promise<void> {
     try {
-      const response = await fetch('https://7253-34-34-170-162.ngrok-free.app/events');
+      const response = await fetch('https://dangeloluca-dbmappa-l0ykllyjb0b.ws-eu118.gitpod.io/events');
       const data = await response.json();
       this.events = data;  // Salva gli eventi
       this.addMarkers();  // Aggiungi marker sulla mappa dopo aver recuperato gli eventi
