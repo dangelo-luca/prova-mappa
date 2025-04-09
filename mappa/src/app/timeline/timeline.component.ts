@@ -1,18 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { latLng, tileLayer, MapOptions, Map } from 'leaflet';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { latLng, tileLayer, MapOptions, Map, Icon, icon, marker, LayerGroup } from 'leaflet';
 import * as L from 'leaflet';
-import { Icon, icon } from 'leaflet';
-import { Event } from '../models/event.models';
+
+interface Location {
+  lat: number;
+  lng: number;
+  name: string;
+}
+
+interface Evento {
+  id: number;
+  title: string;
+  details: string;
+  date: string;
+  location: Location;
+}
+
+interface EventByYear {
+  anno: number;
+  eventi_anno: Evento[];
+}
 
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
-  styleUrls: ['./timeline.component.css']
+  styleUrls: ['./timeline.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimelineComponent implements OnInit {
-  events: Event[] = [];  // Eventi recuperati dal backend
-  map: L.Map | undefined;
-  markersLayer = new L.LayerGroup();
+  eventsByYear: EventByYear[] = [];
+  map: Map | undefined;
+  markersLayer = new LayerGroup();
+  mostraCard: boolean = false;
+  eventoSelezionato: Evento | null = null;
+  initialMarkersAdded: boolean = false; // Flag per controllare se i marker iniziali sono stati aggiunti
 
   private initialView = {
     lat: 45.4642,
@@ -20,64 +41,115 @@ export class TimelineComponent implements OnInit {
     zoom: 11
   };
 
-  options: L.MapOptions = {
+  options: MapOptions = {
     zoom: this.initialView.zoom,
-    center: L.latLng(this.initialView.lat, this.initialView.lng),
+    center: latLng(this.initialView.lat, this.initialView.lng),
     layers: [
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: '&copy; OpenStreetMap contributors'
+        attribution: '© OpenStreetMap contributors'
       })
     ]
   };
 
   private highlightIcon: Icon = icon({
-    iconUrl: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
-    iconSize: [30, 40],
-    iconAnchor: [15, 40]
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
   });
 
-  constructor() {}
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.fetchEvents();  // Carica gli eventi
+    console.log("ciao");
+    this.fetchEvents();
   }
 
-  // Recupera gli eventi dal backend
   async fetchEvents(): Promise<void> {
+    console.log("ciao fetchEvents");
     try {
-      const response = await fetch('https://dangeloluca-dbmappa-l0ykllyjb0b.ws-eu118.gitpod.io/events');
+      const response = await fetch('https://4200-dangeloluca-dbmappa-l0ykllyjb0b.ws-eu118.gitpod.io/events');
       const data = await response.json();
-      this.events = data;  // Salva gli eventi
-      this.addMarkers();  // Aggiungi marker sulla mappa dopo aver recuperato gli eventi
+      console.log("Dati ricevuti:", data);
+      this.groupEventsByYear(data);
+      this.cd.detectChanges();
     } catch (error) {
       console.error('Errore nel recupero degli eventi:', error);
     }
   }
 
-  // Aggiungi marker sulla mappa
-  addMarkers(): void {
-    this.events.forEach((event: Event) => {
-      const marker = L.marker([event.latitude, event.longitude], { icon: this.highlightIcon })
-        .addTo(this.markersLayer)
-        .bindPopup(`<b>${event.title}</b><br>${event.details}`);
+  groupEventsByYear(events: any[]): void {
+    const grouped: { [key: number]: Evento[] } = {};
+    events.forEach((event: any) => {
+      const year = new Date(event.date).getFullYear();
+      if (!grouped[year]) {
+        grouped[year] = [];
+      }
+      grouped[year].push({
+        id: event.id,
+        title: event.title,
+        details: event.content,
+        date: event.date,
+        location: {
+          lat: parseFloat(event.latitude),
+          lng: parseFloat(event.longitude),
+          name: event.location
+        }
+      });
     });
 
-    // Aggiungi il layer dei marker alla mappa
-    if (this.map) {
-      this.markersLayer.addTo(this.map);
+    this.eventsByYear = Object.keys(grouped)
+      .sort((a, b) => parseInt(a) - parseInt(b))
+      .map(year => ({ anno: parseInt(year), eventi_anno: grouped[parseInt(year)] }));
+
+    console.log("Eventi raggruppati per anno:", this.eventsByYear);
+  }
+
+  // Aggiungi marker sulla mappa per l'anno selezionato
+  addMarkersForYear(events: Evento[]): void {
+    this.markersLayer.clearLayers(); // Rimuovi i marker precedenti
+
+    events.forEach((event: Evento) => {
+      const markerInstance = marker([event.location.lat, event.location.lng], { icon: this.highlightIcon })
+        .bindPopup(`<b>${event.title}</b><br>${event.location.name}`)
+        .on('click', () => this.onclick(event));
+      this.markersLayer.addLayer(markerInstance);
+    });
+
+    if (this.map && !this.map.hasLayer(this.markersLayer)) {
+      this.markersLayer.addTo(this.map); // Aggiungi il layer dei marker solo se non è già presente
     }
   }
 
-  // Metodo chiamato quando la mappa è pronta
   onMapReady(map: Map): void {
     console.log('Mappa pronta:', map);
-    this.map = map;  // Assegna l'istanza della mappa
-    this.addMarkers();  // Aggiungi i marker alla mappa
+    this.map = map;
+    // Non aggiungere this.markersLayer qui all'inizio
   }
 
-  selectEvent(event: Event): void {
-    console.log('Evento selezionato:', event);
-    // Puoi aggiungere logica per evidenziare un evento sulla mappa, se necessario
+  selectEvent(yearEvent: EventByYear): void {
+    if (!this.map) return;
+
+    this.map.setView([this.initialView.lat, this.initialView.lng], this.initialView.zoom);
+    this.addMarkersForYear(yearEvent.eventi_anno);
+  }
+
+  onclick(ev: Evento) {
+    this.eventoSelezionato = ev;
+    this.mostraCard = true;
+    setTimeout(() => {
+      this.cd.detectChanges();
+    });
+  }
+
+  chiudiCard() {
+    this.mostraCard = false;
+    this.eventoSelezionato = null;
+    setTimeout(() => {
+      this.cd.detectChanges();
+    });
   }
 }
