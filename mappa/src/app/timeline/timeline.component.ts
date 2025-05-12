@@ -71,7 +71,7 @@ export class TimelineComponent implements OnInit {
   async fetchEvents(): Promise<void> {
     console.log("ciao fetchEvents");
     try {
-      const response = await fetch('https://4200-dangeloluca-dbmappa-l0ykllyjb0b.ws-eu118.gitpod.io/events');
+      const response = await fetch('https://5000-dangeloluca-mysqlgitpod-zrg5mlra3dq.ws-eu118.gitpod.io/events');
       const data = await response.json();
       console.log("Dati ricevuti:", data);
       this.groupEventsByYear(data);
@@ -94,8 +94,8 @@ export class TimelineComponent implements OnInit {
         details: event.content,
         date: event.date,
         location: {
-          lat: parseFloat(event.latitude),
-          lng: parseFloat(event.longitude),
+          lat: parseFloat(event.coordinatex),
+          lng: parseFloat(event.coordinatey),
           name: event.location
         }
       });
