@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { ViewEventComponent } from './view-event/view-event.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ChatComponent } from './chat/chat.component';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     LeafletModule,
   ],
-  declarations: [AppComponent, TimelineComponent, ViewEventComponent],
+  declarations: [AppComponent, TimelineComponent, ViewEventComponent, ChatComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
