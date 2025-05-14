@@ -71,7 +71,7 @@ export class TimelineComponent implements OnInit {
   async fetchEvents(): Promise<void> {
     console.log("ciao fetchEvents");
     try {
-      const response = await fetch('https://5000-dangeloluca-mysqlgitpod-zrg5mlra3dq.ws-eu118.gitpod.io/events');
+      const response = await fetch('https://5000-dangeloluca-logineditor-yk538yv19ss.ws-eu118.gitpod.io/events');
       const data = await response.json();
       console.log("Dati ricevuti:", data);
       this.groupEventsByYear(data);
@@ -110,19 +110,29 @@ export class TimelineComponent implements OnInit {
 
   // Aggiungi marker sulla mappa per l'anno selezionato
   addMarkersForYear(events: Evento[]): void {
-    this.markersLayer.clearLayers(); // Rimuovi i marker precedenti
-
+    console.log("Aggiunta marker per eventi:", events);
+  
+    this.markersLayer.clearLayers();
+  
     events.forEach((event: Evento) => {
-      const markerInstance = marker([event.location.lat, event.location.lng], { icon: this.highlightIcon })
+      const markerInstance = marker(
+        [event.location.lat, event.location.lng],
+        { icon: this.highlightIcon }
+      )
         .bindPopup(`<b>${event.title}</b><br>${event.location.name}`)
         .on('click', () => this.onclick(event));
+      
       this.markersLayer.addLayer(markerInstance);
     });
-
+  
     if (this.map && !this.map.hasLayer(this.markersLayer)) {
-      this.markersLayer.addTo(this.map); // Aggiungi il layer dei marker solo se non è già presente
+      console.log("Aggiunta layer alla mappa");
+      this.markersLayer.addTo(this.map);
+    } else {
+      console.warn("Il layer è già presente o la mappa è null");
     }
   }
+  
 
   onMapReady(map: Map): void {
     console.log('Mappa pronta:', map);
@@ -131,8 +141,11 @@ export class TimelineComponent implements OnInit {
   }
 
   selectEvent(yearEvent: EventByYear): void {
-    if (!this.map) return;
-
+    if (!this.map){ 
+      console.warn("Mappa non ancora inizializzata");
+    return;
+}
+    console.log("Eventi per l'anno selezionato:", yearEvent);
     this.map.setView([this.initialView.lat, this.initialView.lng], this.initialView.zoom);
     this.addMarkersForYear(yearEvent.eventi_anno);
   }
