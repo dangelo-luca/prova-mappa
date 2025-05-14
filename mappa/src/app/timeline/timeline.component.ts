@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { latLng, tileLayer, MapOptions, Map, Icon, icon, marker, LayerGroup } from 'leaflet';
+import { EventService } from '../services/event.service'; // aggiorna il path se diverso
+
 import * as L from 'leaflet';
 
 interface Location {
@@ -61,7 +63,7 @@ export class TimelineComponent implements OnInit {
     shadowSize: [41, 41]
   });
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef, private eventService: EventService) {}
 
   ngOnInit(): void {
     console.log("ciao");
@@ -151,10 +153,17 @@ export class TimelineComponent implements OnInit {
   }
 
   onclick(ev: Evento) {
-    this.eventoSelezionato = ev;
-    this.mostraCard = true;
-    setTimeout(() => {
-      this.cd.detectChanges();
+    this.eventService.getEventById(ev.id).subscribe(eventData => {
+      if (eventData) {
+        this.eventoSelezionato = {
+          ...ev,
+          details: eventData.content // contenuto completo aggiornato
+        };
+        this.mostraCard = true;
+        this.cd.detectChanges();
+      } else {
+        console.warn("Evento non trovato nel servizio.");
+      }
     });
   }
 

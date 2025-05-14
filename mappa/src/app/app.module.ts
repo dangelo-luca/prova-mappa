@@ -9,6 +9,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { AppComponent } from './app.component';
 import { TimelineComponent } from './timeline/timeline.component';
+import { ViewEventComponent } from './view-event/view-event.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -16,10 +18,10 @@ import { TimelineComponent } from './timeline/timeline.component';
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-
+    HttpClientModule,
     LeafletModule,
   ],
-  declarations: [AppComponent, TimelineComponent],
+  declarations: [AppComponent, TimelineComponent, ViewEventComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
