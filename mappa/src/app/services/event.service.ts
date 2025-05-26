@@ -7,7 +7,7 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class EventService {
-  private apiUrl = 'https://5000-dangeloluca-logineditor-yk538yv19ss.ws-eu118.gitpod.io/events';
+  private apiUrl = 'https://5000-dangeloluca-logineditor-yk538yv19ss.ws-eu119.gitpod.io/events';
   private cachedEvents: any[] = [];
 
   constructor(private http: HttpClient) {}
