@@ -73,7 +73,7 @@ export class TimelineComponent implements OnInit {
   async fetchEvents(): Promise<void> {
     console.log("ciao fetchEvents");
     try {
-      const response = await fetch('https://5000-dangeloluca-logineditor-yk538yv19ss.ws-eu119.gitpod.io/events');
+      const response = await fetch('https://5000-dangeloluca-logineditor-yk538yv19ss.ws-eu120.gitpod.io/events');
       const data = await response.json();
       console.log("Dati ricevuti:", data);
       this.groupEventsByYear(data);

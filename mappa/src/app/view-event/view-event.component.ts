@@ -32,7 +32,7 @@ export class ViewEventComponent implements OnChanges {
   }
 
   sanitizeContent(content: string): SafeHtml {
-    const backendUrl = 'https://5000-dangeloluca-logineditor-yk538yv19ss.ws-eu119.gitpod.io';
+    const backendUrl = 'https://5000-dangeloluca-logineditor-yk538yv19ss.ws-eu120.gitpod.io';
     const updatedContent = content.replace(/src="\/static\/uploads\//g, `src="${backendUrl}/static/uploads/`);
     return this.sanitizer.bypassSecurityTrustHtml(updatedContent);
   }
